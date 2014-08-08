@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+{%load staticfiles %}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="{% static "css\bootstrap-theme.css" %}" type="text/css" rel="stylesheet"/>
+<link href="{% static "css\bootstrap.css" %}" type="text/css" rel="stylesheet"/>
+<link href="{% static "css\bootstrap-theme.css" %}" type="text/css" rel="stylesheet"/>
+<link href="{% static "css\main.css" %}" type="text/css" rel="stylesheet"/>
+<link href="{% static "css\logo-nav.css" %}" type="text/css" rel="stylesheet"/>
+<style>
+
+</style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+		 <p style="font-size:30px;margin-left: -300px;margin-top: 13px;">Order Process</p>
+           
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+<div id="pageone" class="container-fluid">
+
+<div id="process_data" style="width: 200%;max-width: 300%;">
+<div id="first_column" class="row" >
+<ul id="fc">
+<h4><li>Job Id</li></h4>
+<hr />
+</ul>
+</div>
+<div id="second_column" class="row">
+<ul id="sc" >
+<h4><li>Client Id</li></h4>
+<hr />
+</ul>
+</div>
+<div id="third_column" class="row">
+<ul id="tc">
+<h4><li class=>Job Request</li></h4>
+<hr />
+</ul>
+</div>
+<div id="fourth_column" class="row" >
+<ul id="frtc">
+<h4><li class=>DeadLine</li></h4>
+<hr />
+</ul>
+</div>
+<div id="five_column" class="row" >
+<ul id="fftc">
+<h4><li class=>Status</li></h4>
+<hr />
+</ul>
+</div>
+<div id="sixth_column" class="row">
+<ul id="sxc">
+<h4><li class=>Remarks</li></h4>
+<hr />
+</ul>
+</div>
+</div>
+
+</div>
+<!--Load Scripts at the end-->
+<script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>  
+<script src="{%static "js\bootstrap.js" %}"></script>
+<script>
+
+var jsonrequesturl="http://127.0.0.1:8000/showorderprocess";
+
+var email,courselevel,coursename;
+	$(document).ready(function(){
+	
+	getdata();
+	
+});
+function getdata()
+{
+	$.getJSON(jsonrequesturl,function (data) {
+       
+	 $.each(data, function (index, d) {
+	    $('#fc').append("<li class=''>"+d.job_id+"</li>")
+		$('#sc').append("<li class=''>"+d.client_id+"</li>")
+		$('#tc').append("<li class=''>"+d.job_request+"</li>")
+		$('#frtc').append("<li class=''>"+d.deadline+"</li>")
+		$('#fftc').append("<li class=''>"+d.status+"</li>")
+		$('#sxc').append("<li class=''>"+d.remarks+"</li>")
+        });
+    	});
+}
+</script>
+<!--Load Scripts-->
+</body>
+</html>

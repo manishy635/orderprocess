@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% load staticfiles %}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="{% static "css\bootstrap-theme.css" %}" type="text/css" rel="stylesheet"/>
+<link href="{% static "css\bootstrap.css" %}" type="text/css" rel="stylesheet"/>
+<link href="{% static "css\bootstrap-theme.css" %}" type="text/css" rel="stylesheet"/>
+<link href="{% static "css\main.css" %}" type="text/css" rel="stylesheet"/>
+<link href="{% static "css\logo-nav.css" %}" type="text/css" rel="stylesheet"/>
+<style>
+
+</style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+		 <p style="font-size:30px;margin-left: -300px;margin-top: 13px;">Client Details</p>
+           
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+<div class="container-fluid" id="pageone">
+ 
+<div id="client_details" style="width: 180%;max-width: 200%;">
+<div id="first_column" class="row" >
+<ul id="fc">
+<h4><li>Client Id</li></h4>
+<hr />
+<ul>
+</div>
+<div id="second_column" class="row" >
+<ul id="sc">
+<h4><li>Company Name</li></h4>
+<hr />
+<ul>
+</div>
+<div id="third_column" class="row" >
+<ul id="tc">
+<h4><li>Customer Name</li></h4>
+<hr />
+<ul>
+</div>
+<div id="fourth_column" class="row" >
+<ul id="frtc">
+<h4><li>Email</li></h4>
+<hr />
+<ul>
+</div>
+<div id="five_column" class="row" >
+<ul id="fftc">
+<h4><li>Mobile</li></h4>
+<hr />
+<ul>
+</div>
+<div id="sixth_column" class="row" >
+<ul id="sxc">
+<h4><li>Location</li></h4>
+<hr />
+<ul>
+</div>
+<div id="seventh_column" class="row" >
+<ul id="stc">
+<h4><li>Address</li></h4>
+<hr />
+<ul>
+</div>
+</div>
+</div>
+<!--Load scripts-->
+<script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>   
+<script src="{%static "js\bootstrap.js" %}"></script>
+<script>
+
+var jsonrequesturl="http://127.0.0.1:8000/clientdetails";
+	
+	$(document).ready(function(){
+
+	getdata();
+});
+function getdata()
+{
+	$.getJSON(jsonrequesturl,function (data) {
+        $.each(data, function (index, d) {
+	    $('#fc').append("<li>"+d.client_id+"</li>")
+		$('#sc').append("<li>"+d.company_name+"</li>")
+		$('#tc').append("<li>"+d.cust_name+"</li>")
+		$('#frtc').append("<li>"+d.email+"</li>")
+		$('#fftc').append("<li>"+d.mobile+"</li>")
+		$('#sxc').append("<li>"+d.location+"</li>")
+		$('#stc').append("<li>"+d.address+"</li>")	
+        });
+		});
+	
+}
+</script>
+<!--End scripts-->
+</body>
+</html>

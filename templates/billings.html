@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% load staticfiles %}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="{% static "css\bootstrap-theme.css" %}" type="text/css" rel="stylesheet"/>
+<link href="{% static "css\bootstrap.css" %}" type="text/css" rel="stylesheet"/>
+<link href="{% static "css\bootstrap-theme.css" %}" type="text/css" rel="stylesheet"/>
+<link href="{% static "css\main.css" %}" type="text/css" rel="stylesheet"/>
+<link href="{% static "css\logo-nav.css" %}" type="text/css" rel="stylesheet"/>
+<style>
+
+</style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+		 <p style="font-size:30px;margin-left: -300px;margin-top: 13px;">Billing Details</p>
+           
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+<div id="pageone" class="container-fluid">
+<div id="billings" style="width: 180%;max-width: 200%;">
+<div id="first_column" class="row"  >
+<ul id="fc">
+<h4><li >Client Id</li></h4>
+<hr />
+<ul>
+</div>
+<div id="second_column" class="row"  >
+<ul id="sc">
+<h4><li>Invoice Number</li></h4>
+<hr />
+<ul>
+</div>
+<div id="third_column" class="row"  >
+<ul id="tc">
+<h4><li>Date</li></h4>
+<hr />
+<ul>
+</div>
+<div id="fourth_column" class="row"  >
+<ul id="frtc">
+<h4><li>Job Request</li></h4>
+<hr />
+<ul>
+</div>
+<div id="five_column"  class="row"  >
+<ul id="fftc">
+<h4><li>Units</li></h4>
+<hr />
+<ul>
+</div>
+<div id="sixth_column" class="row"  >
+<ul id="sxc">
+<h4><li>Amount</li></h4>
+<hr />
+<ul>
+</div>
+<div id="seventh_column" class="row"  >
+<ul id="stc">
+<h4><li>View Invoice</li></h4>
+<hr />
+<ul>
+</div>
+</div>
+</div>
+<script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+<script src="{%static "js\bootstrap.js" %}"></script>
+<script>
+
+var jsonrequesturl="http://127.0.0.1:8000/billingdetails/";
+var dynamic_data="<div style=''>";
+	
+	$(document).ready(function(){
+	getdata();
+	
+});
+function getdata()
+{
+	$.getJSON(jsonrequesturl,function (data) {
+        $.each(data, function (index, d) {
+        $('#fc').append("<li id='lbl_client_id_"+index+"'>"+d.client_id+"</li>")
+		$('#sc').append("<li id='lbl_invoice_no_"+index+"'>"+d.invoice_no+"</li>")
+		$('#tc').append("<li id='lbl_date_"+index+"'>"+d.date+"</li>")
+		$('#frtc').append("<li id='lbl_jobrequest_"+index+"'>"+d.job_request+"</li>")
+		$('#fftc').append("<li id='lbl_units_"+index+"'>"+d.units+"</li>")
+		$('#sxc').append("<li id='lbl_amount_"+index+"'>"+d.Amount+"</li>")
+		$('#stc').append("<li id='lbl_view_"+index+"'><a href='#' id='btn_view_"+index+"'>View</a></li>")
+		});
+		view_invoice();
+});
+}
+function view_invoice()
+{
+$('[id^="btn_view_"]').click(function(){
+	var curr_id=this.id;
+	//alert(curr_id);
+	//var curr_email=curr_id.replace("btnresend_","lblemail_");
+    var curr_clientid=curr_id.replace("btn_view_","lbl_client_id_");
+	var client_id="#"+curr_clientid;
+	var client_value=$(client_id).text();
+	//alert(client_value);
+	var url="/invoice?id="+client_value+"/";
+	//alert(url);
+	window.location.replace(url);
+});
+}
+</script>
+</body>
+</html>

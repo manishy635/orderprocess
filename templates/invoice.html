@@ -1,0 +1,133 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+{% load staticfiles%}
+    <title></title>
+
+<!--<link href="{% static "css/billings"%}" rel="stylesheet" type="text/css" media="all" />-->
+<link href="http://billing.imagedb.com/main.css" rel="stylesheet" type="text/css" media="all" />
+
+</head>
+<body>
+<form name="ctl00" method="post" action="" id="ctl00">
+
+
+<div class="container">
+<div class="header">
+<div style="float:left"><span class="logo"><img src="{% static "images/imageDB_black.png" %}" id="Logo" /></span></div>
+<div><p><span id="Company">Lohia Networks Pvt. Ltd.</span><br />
+<span id="LineOne">Regd. Office - 129-D, Kamla Nagar, Delhi-110007.</span><br />
+<span id="LineTwo">Correspondence : 40, IDC, Sector 16, MG Road, Gurgaon-122001. </span><br />
+<span id="LineThree">Tel. : +91 124 4477 987</span><br />
+<span id="LineFour">Email : sales@imagedb.com,   Web : www.imagedb.com</span></p>
+</div>
+</div>
+<div class="break"></div>
+<div class="title">INVOICE</div>
+<div class="add_frm">
+<div class="L"><h1>Bill To,</h1>
+<p><span id="lbl_name"></span><br />
+<span id="lbl_company"></span><br />
+<span id="bill_address"></span><br />
+<span id="billaddress2"></span>
+<span id="bill_country">India</span></p></div>
+
+<div class="R">
+<p class="Lfeild">Invoice No.</p><p id="lbl_invoice" class="Rfeild"></p>
+<p class="Lfeild">Invoice Date</p><p id="lbl_orderdate" class="Rfeild"></p>
+<p class="Lfeild">Purchase Order No</p><p id="lbl_purhase" class="Rfeild"></p>
+<p class="Lfeild">Purchase Order Date</p><p id="lbl_purchase_date" class="Rfeild"></p>
+</div>
+
+</div>
+<div class="break"></div>
+<div id="div_summary" class="table">
+<table id='ruledtable' bgcolor='#fff' cellpadding='1' cellspacing='1' border='0'>
+<thead>
+<tr>
+<th class='col1' scope='col' style='color:#fff'>S.No.</th>
+<th class='col2' scope='col' style='color:#fff'>Particular</th>
+<th class='col3' scope='col' style='color:#fff'>Unit Price</th>
+<th class='col5' scope='col' style='color:#fff'>Qty</th>
+<th class='col6' scope='col' style='color:#fff'>Discount</th>
+<th class='col7' scope='col' style='color:#fff'>Amount</th>
+</tr>
+</thead>
+</table>
+
+<div id="breakid2" class="break"></div>
+<div>
+<div class="down1"><p class="remark">Remarks :</p><p id="span_remarks" class="remarkC"></p></div>
+<div class="down2">
+<p class="Lfeild">Total</p><p id="span_subtotal" class="Rfeild"></p>
+<p class="Lfeild">Service Tax(12%)</p><p id="span_extracharges" class="Rfeild"></p>
+<p class="Lfeild">Edu Cess Tax (2%)</p><p id="span_extracharges1" class="Rfeild"></p>
+<p class="Lfeild">Higher Edu Cess(1%)</p><p id="span_extracharges2" class="Rfeild"></p>
+<p class="Lfeild">Gross Total</p><p id="span_totaldue" class="Rfeild"></p>
+</div>
+</div>
+
+<div style="margin-top:0px"><div class="down3">
+<p id="spanbottom_left" style="font-weight:bold;">Terms and Conditions :</p><span id="spanbottom_right"></span>
+<span id="spanbottom_left2">1. Overdue  Interest  @ 24% p.a. will  be</span> <span id="spanbottom_right2">charged.</span></br>
+<span id="spanbottom_left3">2. Payment should be  made  strictly  as </span> <span id="spanbottom_right3">per order.</span></br>
+<span id="spanbottom_left4">3. All goods are packed & sent at the risk</span> <span id="spanbottom_right4"> of the client.</span></br>
+<span id="spanbottom_left5">4. All disputes arising in this connection will be</span> <span id="spanbottom_right5">subject to New Delhi Jurisdiction only.</span></br>
+<span id="spanbottom_left6">5. Payment should be made by Cheque </span> <span id="spanbottom_right6">in favour of "Lohia Networks Pvt. Ltd."</span></br>
+</div>
+<div class="down4"><p class="sign"><b>For Lohia Networks Pvt. Ltd.</br></br></br></br>Authorized Signatory</b></p><p style="font-weight:bold;"></p></div>
+</div>
+
+
+</div>
+</form>
+
+<!-- Load scripts-->
+<script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+
+<script>
+$(document).ready(function(){
+getdetails();
+});
+
+
+function getdetails()
+{
+var client_id=window.location.search.substring(1);
+var id=client_id.replace("/","");
+id=id.replace("id=","");
+//alert(id);
+var jsonrequest="http://127.0.0.1:8000/invoicedetails/?id="+id+"";
+$.getJSON(jsonrequest, function (data) {
+ 
+          $.each(data, function (index, d) {
+		 
+	$('#lbl_name').append(""+d.cust_name+"");
+	$('#lbl_company').html(""+d.company_name+"");
+	$('#bill_address').html(""+d.address+"");
+	$('#bill_address2').html(""+d.location+"");
+	$('#lbl_invoice').html(""+d.invoice_no+"");
+	$('#lbl_orderdate').html(""+d.date+"");
+	$('#lbl_invoice').html(""+d.invoice_no+"");
+	var totamount=parseInt(d.Amount)*parseInt(d.units);
+	$('#ruledtable').append("<tr><td class='col1'>"+(index+1)+"</td><td class='col2'>"+d.job_request+"</td><td class='col3'>Rs. "+d.Amount+"</td><td class='col4'>"+d.units+"</td><td class='col5'>0%</td><td class='col6'>"+totamount+"</td></tr>");
+	$('#span_subtotal').html(""+totamount+"");
+	var service_tax=((12/parseInt(d.Amount))*100);
+	$('#span_extracharges').html(""+service_tax+"");
+	var edu_tax=((2/parseInt(d.Amount))*100);
+	$('#span_extracharges1').html(""+edu_tax+"");
+	var higher_edu_tax=((1/parseInt(d.Amount))*100);
+	$('#span_extracharges2').html(""+higher_edu_tax+"");
+	var grosstotal=service_tax+edu_tax+higher_edu_tax;
+	$('#span_totaldue').html(""+grosstotal+"");
+	});
+	});
+
+}
+</script>
+<!-- End scripts-->
+</body>
+</html>
